@@ -13,10 +13,6 @@ services:
       - 54320:5432
     volumes:
       - ./postgres:/var/lib/postgresql/data
-      # copy the sql script to create tables
-      # - ./db/shema.sql:/docker-entrypoint-initdb.d/shema.sql
-      # copy the sql script to insert values
-      # - ./db/values.sql:/docker-entrypoint-initdb.d/values.sql
     
   jupyter:
     image: jupyter/scipy-notebook
