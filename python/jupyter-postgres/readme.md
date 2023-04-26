@@ -4,7 +4,7 @@ Jupyter image Info
 
 Build an image
 ```bash
-docker build -t image_name
+docker build -t image_name .
 ```
 
 Run a container

@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  conda:
+    container_name: conda
+    image: asl:latest
+    build:
+      context: . 
+      dockerfile: .docker/Dockerfile
+    volumes:
+      - ./app:/asl    
+    depends_on:
+      - postgres_db
+    networks:
+      - app-tier
+    command:
+      tail -f /dev/null
+
+  postgres_db:
+    image: docker.io/library/postgres:latest
+    container_name: postgres
+    restart: always
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=postgres
+    ports: 
+      - 54320:5432
+    volumes:
+      - .postgres:/var/lib/postgresql/data
+    networks:
+      - app-tier
+
+  pgadmin:
+    image: docker.io/dpage/pgadmin4
+    container_name: pgadmin4
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - 54330:80
+    volumes:
+      - .pgadmin:/var/lib/pgadmin 
+    depends_on: 
+      - postgres_db
+    networks:
+      - app-tier
+
+volumes:
+  .postgres:
+  .pgadmin:
+
+networks:
+  app-tier:
+    driver: bridge

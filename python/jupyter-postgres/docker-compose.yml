@@ -23,8 +23,8 @@ services:
     command: start-notebook.sh
     ports:
      - 8889:8888
-    volumes:
-      - ./app:/home/jovyan/work
+    # volumes:
+    #   - ./app:/home/jovyan/work
 
   
 volumes:

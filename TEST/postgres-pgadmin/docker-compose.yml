@@ -3,33 +3,33 @@ version: "3.8"
 services: 
   postgres:
     image: docker.io/library/postgres:latest
-    container_name: db
+    container_name: test_postgres
     restart: always
     environment: 
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=postgres
     ports: 
-      - 54320:5432
+      - 54333:5432
     volumes:
-      - ./postgres:/var/lib/postgresql/data
+      - .postgres:/var/lib/postgresql/data
 
   pgadmin:
     image: docker.io/dpage/pgadmin4
-    container_name: pgadmin4
+    container_name: test_pgadmin4
     environment: 
       PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
       PGADMIN_DEFAULT_PASSWORD: "admin"
     ports:
-      - 54330:80
+      - 54331:80
+    volumes:
+      - .pgadmin:/var/lib/pgadmin 
     depends_on: 
       - postgres
-    volumes:
-      - ./pgadmin:/var/lib/pgadmin 
 
 volumes:
-  postgres:
-  pgadmin:
+  .postgres:
+  .pgadmin:
 
 
   
